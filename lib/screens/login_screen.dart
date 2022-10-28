@@ -1,4 +1,6 @@
+import 'package:docs_clone_flutter/models/error_model.dart';
 import 'package:docs_clone_flutter/repo/auth_repo.dart';
+import 'package:docs_clone_flutter/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,8 +8,25 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
-  void signInWithGoogle(WidgetRef ref) {
-    ref.read(authRepoProvider).signInWithGoogle();
+  void signInWithGoogle(WidgetRef ref, BuildContext context) async {
+    final sMessenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    final ErrorModel error =
+        await ref.read(authRepoProvider).signInWithGoogle();
+    if (error.error == null) {
+      ref.read(userProvider.notifier).update((state) => error.data);
+      navigator.push(
+        MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
+        ),
+      );
+    } else {
+      sMessenger.showSnackBar(
+        SnackBar(
+          content: Text(error.error!),
+        ),
+      );
+    }
   }
 
   @override
@@ -15,7 +34,7 @@ class LoginScreen extends ConsumerWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton.icon(
-          onPressed: () => signInWithGoogle(ref),
+          onPressed: () => signInWithGoogle(ref, context),
           icon: const Icon(FontAwesomeIcons.google),
           label: const Text("Login with Google"),
           style: ElevatedButton.styleFrom(
