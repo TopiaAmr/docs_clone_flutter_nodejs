@@ -23,7 +23,7 @@ authRouter.post('/api/signup', async (req, res) => {
             res.status(400).json({ error: "User already exists" })
         }
     } catch (e) {
-
+        res.status(500).json({ error: e.message })
     }
 })
 
