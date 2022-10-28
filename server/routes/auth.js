@@ -6,7 +6,7 @@ authRouter.post('/api/signup', async (req, res) => {
     try {
         const { name, email, profilePic } = req.body;
         if (!name | !email | !profilePic) {
-            res.json({error: "Body is missing"})
+            res.json({ error: "Body is missing" })
             return
         }
         let user = await User.findOne({ email: email })
@@ -18,11 +18,9 @@ authRouter.post('/api/signup', async (req, res) => {
             })
 
             user = await user.save()
-            res.status = 200
-            res.json({ user })
+            res.status(200).json({ user })
         } else {
-            res.status = 500
-            res.json({error: "User already exists"})
+            res.status(400).json({ error: "User already exists" })
         }
     } catch (e) {
 
