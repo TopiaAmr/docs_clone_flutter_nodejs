@@ -5,7 +5,7 @@ class UserModel {
   final String name;
   final String email;
   final String profilePic;
-  final String token;
+  final String? token;
   final String uid;
   UserModel({
     required this.name,
@@ -30,7 +30,7 @@ class UserModel {
       name: map['name'] as String,
       email: map['email'] as String,
       profilePic: map['profilePic'] as String,
-      token: map['token'] as String,
+      token: map['token'],
       uid: map['_id'] as String,
     );
   }
