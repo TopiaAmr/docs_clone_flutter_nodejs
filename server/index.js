@@ -3,6 +3,7 @@ const express = require("express")
 const mongoose = require("mongoose");
 const cors = require('cors');
 const authRouter = require("./routes/auth");
+const docRouter = require('./routes/document');
 
 const PORT = process.env.PORT | 3001
 const DB = process.env.mongoDB;
@@ -11,6 +12,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(authRouter)
+app.use(docRouter)
 
 mongoose.connect(DB)
     .then(() => console.log("DB Connected!"))
