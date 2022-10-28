@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class UserModel {
@@ -30,7 +31,7 @@ class UserModel {
       email: map['email'] as String,
       profilePic: map['profilePic'] as String,
       token: map['token'] as String,
-      uid: map['uid'] as String,
+      uid: map['_id'] as String,
     );
   }
 
@@ -38,4 +39,20 @@ class UserModel {
 
   factory UserModel.fromJson(String source) =>
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  UserModel copyWith({
+    String? name,
+    String? email,
+    String? profilePic,
+    String? token,
+    String? uid,
+  }) {
+    return UserModel(
+      name: name ?? this.name,
+      email: email ?? this.email,
+      profilePic: profilePic ?? this.profilePic,
+      token: token ?? this.token,
+      uid: uid ?? this.uid,
+    );
+  }
 }
