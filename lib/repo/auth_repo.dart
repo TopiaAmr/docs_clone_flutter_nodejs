@@ -100,4 +100,8 @@ class AuthRepo {
     }
     return error;
   }
+
+  void signOut() {
+    _storageRepo.setToke('');
+  }
 }
