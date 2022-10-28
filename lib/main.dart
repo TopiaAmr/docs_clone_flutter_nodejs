@@ -1,10 +1,12 @@
 import 'package:docs_clone_flutter/models/error_model.dart';
 import 'package:docs_clone_flutter/repo/auth_repo.dart';
+import 'package:docs_clone_flutter/router.dart';
 import 'package:docs_clone_flutter/screens/home_screen.dart';
 import 'package:docs_clone_flutter/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:routemaster/routemaster.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -35,14 +37,22 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(userProvider);
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: user == null ? const LoginScreen() : const HomeScreen(),
+      routerDelegate: RoutemasterDelegate(
+        routesBuilder: (context) {
+          final user = ref.watch(userProvider);
+          if (user != null && user.token != null && user.token!.isNotEmpty) {
+            return authedRoutes;
+          }
+          return signinRoute;
+        },
+      ),
+      routeInformationParser: const RoutemasterParser(),
     );
   }
 }

@@ -42,6 +42,7 @@ dependencies:
   http: ^0.13.5
   flutter_dotenv: ^5.0.2
   shared_preferences: ^2.0.15
+  routemaster: ^1.0.1
 
 dev_dependencies:
   flutter_test:
