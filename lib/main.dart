@@ -1,8 +1,6 @@
 import 'package:docs_clone_flutter/models/error_model.dart';
 import 'package:docs_clone_flutter/repo/auth_repo.dart';
 import 'package:docs_clone_flutter/router.dart';
-import 'package:docs_clone_flutter/screens/home_screen.dart';
-import 'package:docs_clone_flutter/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
